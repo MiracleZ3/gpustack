@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . /workspace/gpustack
+RUN chmod -R 777 /workspace/gpustack
 RUN cd /workspace/gpustack && \
     make build
 
