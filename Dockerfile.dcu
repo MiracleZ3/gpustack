@@ -16,8 +16,10 @@ RUN apt-get update && apt-get install -y \
     tini \
     && rm -rf /var/lib/apt/lists/*
 
-RUN --mount=type=bind,target=/workspace/gpustack,rw \
-    cd /workspace/gpustack && make build \
+COPY . /workspace/gpustack
+RUN chmod -R 777 /workspace/gpustack
+
+RUN cd /workspace/gpustack && make build \
     && python3 -m pip install pipx \
     && pipx ensurepath --force \
     && WHEEL_PACKAGE="$(ls /workspace/gpustack/dist/*.whl)[audio]" \
